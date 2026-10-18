@@ -1,0 +1,12 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const html=fs.readFileSync(__dirname+'/../dist/index.html','utf8');
+const direction={value:'Термочехлы',events:{},addEventListener(k,f){this.events[k]=f}};
+const tip={},status={},events={},form={description:{value:'Чехлы & обивка\nМодель №3'},deadline:{value:'ноябрь'},reply:{value:'test@example.org'},addEventListener(k,f){events[k]=f}};
+const choices=[...html.matchAll(/class="[^"]*\bchoose\b[^"]*"[^>]*data-direction="([^"]+)"/g)].map(m=>({dataset:{direction:m[1]},addEventListener(k,f){this[k]=f}}));
+assert(choices.length>=3);
+const window={location:{href:''}};
+vm.runInNewContext(fs.readFileSync(__dirname+'/../dist/app.js','utf8'),{document:{querySelector:s=>({'#direction':direction,'#tip':tip,'#brief':form,'#form-status':status})[s],querySelectorAll:()=>choices},window});
+const seat=choices.find(x=>x.dataset.direction==='Чехлы для транспорта');assert(seat);seat.click();assert.equal(direction.value,'Чехлы для транспорта');assert(tip.textContent.includes('модель сиденья'));
+events.submit({preventDefault(){},currentTarget:form});const mail=new URL(window.location.href);assert.equal(mail.protocol,'mailto:');assert.equal(mail.pathname,'mingaray26@yandex.ru');assert(mail.searchParams.get('subject').includes('Чехлы для транспорта'));assert(mail.searchParams.get('body').includes('Чехлы & обивка\nМодель №3'));assert(status.textContent.includes('не отправлены'));
+choices.find(x=>x.dataset.direction==='Термочехлы').click();assert(tip.textContent.includes('температуру'));
+console.log('PASS: shared inquiry chooses transport/thermal, keeps multiline and special characters, prepares mail without sending.');

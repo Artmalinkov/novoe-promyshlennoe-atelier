@@ -1,0 +1,10 @@
+{
+  "name": "novoe-promyshlennoe-atelier",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Сайт Нового промышленного ателье",
+  "scripts": {
+    "test": "node scripts/check-site.cjs && node scripts/check-transport.cjs && node scripts/check-comparison.cjs && node scripts/check-inquiry.cjs"
+  },
+  "engines": { "node": ">=18" }
+}

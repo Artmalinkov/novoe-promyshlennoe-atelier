@@ -1,0 +1,15 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const frame={events:{},style:{setProperty(k,v){this[k]=v}},addEventListener(k,v){this.events[k]=v},getBoundingClientRect(){return {left:10,width:1000}},setPointerCapture(){}};
+const range={events:{},value:'50',addEventListener(k,v){this.events[k]=v},setAttribute(k,v){this[k]=v}};
+const buttons=[0,50,100].map(v=>({dataset:{split:String(v)},addEventListener(k,f){this[k]=f}}));
+vm.runInNewContext(fs.readFileSync(__dirname+'/../dist/comparison.js','utf8'),{document:{querySelector:s=>s==='.compare-frame'?frame:range,querySelectorAll:()=>buttons}});
+assert.equal(frame.style['--split'],'50%');
+buttons[0].click();assert.equal(frame.style['--split'],'0%');
+buttons[2].click();assert.equal(frame.style['--split'],'100%');
+range.value='33';range.events.input();assert.equal(frame.style['--split'],'33%');
+frame.events.pointerdown({button:0,pointerId:1,clientX:760});assert.equal(frame.style['--split'],'75%');
+frame.events.pointermove({clientX:1200});assert.equal(frame.style['--split'],'100%');
+frame.events.pointermove({clientX:-40});assert.equal(frame.style['--split'],'0%');
+frame.events.pointercancel();frame.events.pointermove({clientX:500});assert.equal(frame.style['--split'],'0%');
+assert(range['aria-valuetext'].includes('100%'));
+console.log('PASS: initial split, presets, range input, pointer drag, bounds, cancellation, accessible value');
