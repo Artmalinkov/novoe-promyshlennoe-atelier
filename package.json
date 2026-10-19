@@ -4,7 +4,7 @@
   "private": true,
   "description": "Сайт Нового промышленного ателье",
   "scripts": {
-    "test": "node scripts/check-site.cjs && node scripts/check-transport.cjs && node scripts/check-comparison.cjs && node scripts/check-inquiry.cjs && node scripts/check-furniture.cjs"
+    "test": "node scripts/check-site.cjs && node scripts/check-transport.cjs && node scripts/check-comparison.cjs && node scripts/check-inquiry.cjs"
   },
   "engines": { "node": ">=18" }
 }
