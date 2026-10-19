@@ -10,3 +10,11 @@ const seat=choices.find(x=>x.dataset.direction==='Чехлы для трансп
 events.submit({preventDefault(){},currentTarget:form});const mail=new URL(window.location.href);assert.equal(mail.protocol,'mailto:');assert.equal(mail.pathname,'mingaray26@yandex.ru');assert(mail.searchParams.get('subject').includes('Чехлы для транспорта'));assert(mail.searchParams.get('body').includes('Чехлы & обивка\nМодель №3'));assert(status.textContent.includes('не отправлены'));
 choices.find(x=>x.dataset.direction==='Термочехлы').click();assert(tip.textContent.includes('температуру'));
 console.log('PASS: shared inquiry chooses transport/thermal, keeps multiline and special characters, prepares mail without sending.');
+
+window.location.search='?category=hotel';
+vm.runInNewContext(fs.readFileSync(__dirname+'/../dist/app.js','utf8'),{document:{querySelector:s=>({'#direction':direction,'#tip':tip,'#brief':form,'#form-status':status})[s],querySelectorAll:()=>choices},window,URLSearchParams});
+assert.equal(direction.value,'Текстиль для отелей');assert(tip.textContent.includes('матрасов'));
+assert(html.includes('<option>Текстиль для отелей</option>'));
+events.submit({preventDefault(){},currentTarget:form});
+const hotelMail=new URL(window.location.href);assert(hotelMail.searchParams.get('subject').includes('Текстиль для отелей'));assert(hotelMail.searchParams.get('body').includes('Направление: Текстиль для отелей'));
+console.log('PASS: hotel inquiry deep link preselects direction, updates guidance and includes direction in the prepared email.');
