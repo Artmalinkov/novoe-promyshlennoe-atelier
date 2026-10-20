@@ -1,0 +1,8 @@
+/* Compact visible markers with a generous transparent pointer target. */
+#furniture-preview .furniture-point{--marker-size:24px;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;background:transparent;box-shadow:none;isolation:isolate;font-size:10px;line-height:1;font-weight:600}
+#furniture-preview .furniture-point::before{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:var(--marker-size);height:var(--marker-size);box-sizing:border-box;border:1.5px solid var(--orange);border-radius:50%;background:#fffaf2ed;box-shadow:0 1px 4px #0002;z-index:-1;transition:background .15s}
+#furniture-preview .furniture-point:hover,#furniture-preview .furniture-point[aria-pressed=true]{background:transparent}
+#furniture-preview .furniture-point:hover::before,#furniture-preview .furniture-point[aria-pressed=true]::before{background:#ffd3ac}
+#furniture-preview .furniture-point:focus-visible{outline:none}
+#furniture-preview .furniture-point:focus-visible::before{outline:2px solid #6a4b2e;outline-offset:3px}
+@media(max-width:700px){#furniture-preview .furniture-point{--marker-size:22px;font-size:9px}}
