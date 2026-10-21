@@ -21,3 +21,10 @@ console.log('PASS: hotel inquiry deep link preselects direction, updates guidanc
 window.location.search='?category=furniture';
 vm.runInNewContext(fs.readFileSync(__dirname+'/../dist/app.js','utf8'),{document:{querySelector:s=>({'#direction':direction,'#tip':tip,'#brief':form,'#form-status':status})[s],querySelectorAll:()=>choices},window,URLSearchParams});
 assert.equal(direction.value,'Чехлы и обивка для мебели');
+choices.find(x=>x.dataset.direction==='Индивидуальный пошив').click();
+assert.equal(direction.value,'Индивидуальный пошив');
+assert(tip.textContent.includes('фурнитуру'));
+assert(html.includes('<option>Индивидуальный пошив</option>'));
+events.submit({preventDefault(){},currentTarget:form});
+assert(new URL(window.location.href).searchParams.get('body').includes('Направление: Индивидуальный пошив'));
+console.log('PASS: individual sewing inquiry selects the direction, shows hardware guidance and prepares the correct email.');
