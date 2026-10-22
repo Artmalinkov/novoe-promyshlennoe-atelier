@@ -1,0 +1,17 @@
+/* Approved "Modern atelier" typography. System fonts require no external requests. */
+body{font-family:'Segoe UI Variable Text','Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+h1,h2,h3{font-family:'Segoe UI Variable Display','Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+h1,h2{font-weight:650}h3{font-weight:600}
+#transport,#furniture-preview{font-family:'Segoe UI Variable Text','Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+.hero>div:first-child{min-width:0}
+.hero h1.hero-heading{font-size:clamp(45px,4.9vw,70px);line-height:1.04;letter-spacing:-2.6px}
+.heading-line{display:block}
+.hero-heading>.heading-line:first-child,.split-heading>.heading-line:first-child{font-weight:350}
+.hero-heading>.heading-line:not(:first-child){font-weight:700}
+.hero-heading>.heading-line:first-child{letter-spacing:-3px}
+.split-heading>.heading-line:not(:first-child){font-weight:650}
+.hero .lead{font-size:16px;line-height:1.75}
+.eyebrow{letter-spacing:2.4px;font-weight:600}
+.site-header .brand{font-family:'Segoe UI',Arial,sans-serif}
+@media(max-width:900px){.hero h1.hero-heading{font-size:44px;letter-spacing:-2px}.hero-heading>.heading-line:first-child{letter-spacing:-2px}}
+@media(max-width:620px){.hero h1.hero-heading{font-size:clamp(36px,9.6vw,57px);letter-spacing:-2px}.hero .lead{font-size:15px}}
